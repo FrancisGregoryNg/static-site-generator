@@ -1,7 +1,7 @@
 import unittest
 
-from textnode import *
-from split_markdown_to_textnode import *
+from src.textnode import *
+from src.split_markdown_to_textnode import *
 
 
 class TestSplitMarkdownToTextNode(unittest.TestCase):

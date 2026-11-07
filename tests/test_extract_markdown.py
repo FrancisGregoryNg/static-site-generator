@@ -1,6 +1,6 @@
 import unittest
 
-from extract_markdown import *
+from src.extract_markdown import *
 
 
 class TestExtractMarkdown(unittest.TestCase):

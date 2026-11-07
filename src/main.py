@@ -1,4 +1,5 @@
-from textnode import *
+from src.textnode import *
+
 
 def main():
     sample = TextNode(
