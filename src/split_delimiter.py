@@ -19,7 +19,7 @@ def split_nodes_delimiter(
         new_nodes.extend(
             [
                 TextNode(text, text_type) if i % 2 == 1
-                else TextNode(text, TextType.TEXT) 
+                else TextNode(text, TextType.TEXT)
                 for i, text in enumerate(split_text)
                 if text != ""
             ]
