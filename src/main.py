@@ -1,13 +1,32 @@
+import os
+import shutil
+
 from src.textnode import *
 
 
 def main():
-    sample = TextNode(
-        "This is some anchor text", 
-        TextType.LINK, 
-        "https://www.boot.dev",
-    )
-    print(sample)
+    static = os.path.abspath("static")
+    public = os.path.abspath("public")
+    shutil.rmtree(public)
+    print(f"cleared old {public}")
+    os.mkdir(public)
+    print(f"created new {public}")
+    populate(source=static, destination=public)
+
+def populate(source: str, destination: str) -> None:
+    if not os.path.exists(destination):
+        raise Exception(f"{destination} is not a valid path")
+    if not os.path.exists(source):
+        raise Exception(f"{source} is not a valid path")
+    for content in os.listdir(source):
+        content_path=os.path.join(source, content)
+        if os.path.isdir(content_path):
+            destination = os.path.join(destination, content)
+            os.mkdir(destination)
+            populate(source=content_path, destination=destination)
+        else:
+            shutil.copy(src=content_path, dst=destination)
+            print(f"copied {os.path.join(destination, content_path)}")
 
 if __name__ == "__main__":
     main()
