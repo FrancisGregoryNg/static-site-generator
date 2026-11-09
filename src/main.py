@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from src.textnode import *
+from src.generate_page import *
 
 
 def main():
@@ -12,6 +12,11 @@ def main():
     os.mkdir(public)
     print(f"created new {public}")
     populate(source=static, destination=public)
+    generate_page(
+        from_path="content/index.md", 
+        template_path="template.html", 
+        dest_path="public/index.html",
+    )
 
 def populate(source: str, destination: str) -> None:
     if not os.path.exists(destination):
@@ -27,6 +32,7 @@ def populate(source: str, destination: str) -> None:
         else:
             shutil.copy(src=content_path, dst=destination)
             print(f"copied {os.path.join(destination, content_path)}")
+
 
 if __name__ == "__main__":
     main()
