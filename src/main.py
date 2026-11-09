@@ -1,21 +1,29 @@
 import os
 import shutil
+import sys
 
 from src.generate_page import *
 
 
 def main():
+    if sys.argv[0] == "":
+        basepath = "/"
+    else: 
+        basepath = sys.argv[0]
     static = os.path.abspath("static")
-    public = os.path.abspath("public")
-    shutil.rmtree(public)
-    print(f"cleared old {public}")
-    os.mkdir(public)
-    print(f"created new {public}")
-    populate(source=static, destination=public)
+    docs = os.path.abspath("docs")
+    if not os.path.isdir(docs):
+        os.mkdir(docs)
+    shutil.rmtree(docs)
+    print(f"cleared old {docs}")
+    os.mkdir(docs)
+    print(f"created new {docs}")
+    populate(source=static, destination=docs)
     generate_pages(
+        base_path = basepath,
         from_path="content", 
         template_path="template.html", 
-        dest_path="public",
+        dest_path="docs",
     )
 
 def populate(source: str, destination: str) -> None:

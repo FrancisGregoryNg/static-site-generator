@@ -8,7 +8,7 @@ def extract_title(markdown) -> str:
     if first_line[:2] == "# ":
         return first_line[2:].strip()
             
-def generate_page(from_path, template_path, dest_path):
+def generate_page(base_path, from_path, template_path, dest_path):
 
     for path in [from_path, template_path]:
         if not os.path.exists(path):
@@ -29,6 +29,8 @@ def generate_page(from_path, template_path, dest_path):
     title = extract_title(markdown)
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
+    template = template.replace('href="/', f'href="{base_path}')
+    template = template.replace('src="/', f'src="{base_path}')
 
     dest_dir = os.path.dirname(dest_path)
     if not os.path.exists(dest_dir):
@@ -37,18 +39,20 @@ def generate_page(from_path, template_path, dest_path):
     with open(dest_path, "w") as file:
         file.write(template)
 
-def generate_pages(from_path, template_path, dest_path):
+def generate_pages(base_path, from_path, template_path, dest_path):
 
     for item in os.listdir(from_path):
         item_path = os.path.join(from_path, item)
         if os.path.isdir(item_path):
             generate_pages(
+                base_path,
                 item_path, 
                 template_path, 
                 os.path.join(dest_path, item)
             )
         elif item.endswith(".md"):
             generate_page(
+                base_path,
                 item_path, 
                 template_path, 
                 os.path.join(
