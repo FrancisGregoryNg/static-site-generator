@@ -12,10 +12,10 @@ def main():
     os.mkdir(public)
     print(f"created new {public}")
     populate(source=static, destination=public)
-    generate_page(
-        from_path="content/index.md", 
+    generate_pages(
+        from_path="content", 
         template_path="template.html", 
-        dest_path="public/index.html",
+        dest_path="public",
     )
 
 def populate(source: str, destination: str) -> None:

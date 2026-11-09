@@ -32,7 +32,27 @@ def generate_page(from_path, template_path, dest_path):
 
     dest_dir = os.path.dirname(dest_path)
     if not os.path.exists(dest_dir):
-        os.mkdirs(dest_dir)
+        os.makedirs(dest_dir)
 
     with open(dest_path, "w") as file:
         file.write(template)
+
+def generate_pages(from_path, template_path, dest_path):
+
+    for item in os.listdir(from_path):
+        item_path = os.path.join(from_path, item)
+        if os.path.isdir(item_path):
+            generate_pages(
+                item_path, 
+                template_path, 
+                os.path.join(dest_path, item)
+            )
+        else:
+            generate_page(
+                item_path, 
+                template_path, 
+                os.path.join(
+                    dest_path, 
+                    os.path.splitext(item)[0] + ".html"
+                )
+            )
