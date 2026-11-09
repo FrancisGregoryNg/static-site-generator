@@ -47,7 +47,7 @@ def generate_pages(from_path, template_path, dest_path):
                 template_path, 
                 os.path.join(dest_path, item)
             )
-        else:
+        elif item.endswith(".md"):
             generate_page(
                 item_path, 
                 template_path, 
