@@ -6,10 +6,10 @@ from src.generate_page import *
 
 
 def main():
-    if sys.argv[0] == "":
+    if len(sys.argv) < 2:
         basepath = "/"
     else: 
-        basepath = sys.argv[0]
+        basepath = sys.argv[1]
     static = os.path.abspath("static")
     docs = os.path.abspath("docs")
     if not os.path.isdir(docs):
